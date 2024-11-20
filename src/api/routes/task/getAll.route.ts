@@ -5,6 +5,31 @@ import { GetAllTaskUsecase } from "../../../usecases/task/getAll.usecase";
 
 export type GetAllTaskResponseDto = GetAllTaskOutputDto
 
+/**
+ * @swagger
+ * /api:
+ *   get:
+ *     summary: Retrieve all tasks
+ *     responses:
+ *       200:
+ *         description: A list of tasks
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   uid:
+ *                     type: string
+ *                   name:
+ *                     type: string
+ *                   description:
+ *                     type: string
+ *                   dueDate:
+ *                     type: string
+ *                     format: date-time
+ */
 export class GetAllTaskRoute extends Route{
     private constructor(
         private readonly path : string,

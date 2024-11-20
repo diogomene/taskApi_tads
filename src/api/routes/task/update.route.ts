@@ -4,6 +4,36 @@ import { UpdateTaskUsecase } from "../../../usecases/task/update.usecase";
 
 export type UpdateTaskResponseDto = void
 
+/**
+ * @swagger
+ * /api/{uid}:
+ *   put:
+ *     summary: Update an existing task
+ *     parameters:
+ *       - in: path
+ *         name: uid
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Unique identifier of the task to update
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               dueDate:
+ *                 type: string
+ *                 format: date-time
+ *     responses:
+ *       200:
+ *         description: Task updated successfully
+ */
 export class UpdateTaskRoute extends Route{
     private constructor(
         private readonly path : string,

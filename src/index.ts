@@ -12,7 +12,9 @@ import { GetTaskUsecase } from "./usecases/task/get.usecase"
 import { GetAllTaskUsecase } from "./usecases/task/getAll.usecase"
 import { UpdateTaskUsecase } from "./usecases/task/update.usecase"
 
-(function bootstrap(){
+const PORT = process.env.PORT ? parseInt(process.env.PORT) : 9000
+
+function bootstrap(port:number){
     const repository = new TaskRepository(prisma)
 
     const createTaskUseCase = new CreateTaskUsecase(repository)
@@ -30,5 +32,7 @@ import { UpdateTaskUsecase } from "./usecases/task/update.usecase"
         UpdateTaskRoute.newInstance(updataTaskUsecase)
     ])
 
-    expressApi.start(9000)
-}())
+    expressApi.start(port)
+}
+
+bootstrap(PORT)

@@ -32,8 +32,8 @@ export class TaskRepository implements TaskDao {
   }
   async save(task: Task): Promise<string> {
     const taskDbEntity = this.toTaskDbEntity(task);
-    this.prismaClient.task.create({ data: taskDbEntity });
-    return task.getUid();
+    const taskPrisma = await this.prismaClient.task.create({ data: taskDbEntity });
+    return taskPrisma.uid;
   }
   async getAll(): Promise<Task[]> {
     const taskDbEntities = await this.prismaClient.task.findMany();

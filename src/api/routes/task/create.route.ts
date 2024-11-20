@@ -5,6 +5,41 @@ import { HttpMethod, Route } from "../route";
 
 export type CreateTaskResponseDto = CreateTaskOutputDto
 
+/**
+ * @swagger
+ * /api:
+ *   post:
+ *     summary: Create a new task
+ *     requestBody:
+ *       description: Task object that needs to be created
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - description
+ *               - dueDate
+ *             properties:
+ *               name:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               dueDate:
+ *                 type: string
+ *                 format: date-time
+ *     responses:
+ *       201:
+ *         description: Task created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 uid:
+ *                   type: string
+ */
 export class CreateTaskRoute extends Route{
     private constructor(
         private readonly path : string,
