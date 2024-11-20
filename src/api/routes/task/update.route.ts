@@ -17,7 +17,7 @@ export class UpdateTaskRoute extends Route{
         updataTaskUsecase : UpdateTaskUsecase
     ){
         return new UpdateTaskRoute(
-            "/task/:uid",
+            "/:uid",
             "put",
             updataTaskUsecase
         )

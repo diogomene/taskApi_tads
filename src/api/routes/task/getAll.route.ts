@@ -18,7 +18,7 @@ export class GetAllTaskRoute extends Route{
         getAllTaskUsecase : GetAllTaskUsecase
     ){
         return new GetAllTaskRoute(
-            "/task",
+            "/",
             "get",
             getAllTaskUsecase
         )

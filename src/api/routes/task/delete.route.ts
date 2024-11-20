@@ -19,7 +19,7 @@ export class DeleteTaskRoute extends Route{
         deleteTaskUsecase : DeleteTaskUsecase
     ){
         return new DeleteTaskRoute(
-            "/task/:uid",
+            "/:uid",
             "delete",
             deleteTaskUsecase
         )

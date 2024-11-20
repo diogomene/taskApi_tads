@@ -12,9 +12,11 @@ export class ApiExpress implements Api{
     }
 
     private addRoutes(routes: Route[]){
+        const router = express.Router()
         routes.forEach((route)=>{
-            this.app.use(route.getRoute())
+            router.use(route.getRoute())
         })
+        this.app.use("/api", router)
     }
     start(port: number): void {
         this.app.listen(port, ()=>{

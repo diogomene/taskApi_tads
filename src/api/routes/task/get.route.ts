@@ -18,7 +18,7 @@ export class GetTaskRoute extends Route{
         getTaskUsecase : GetTaskUsecase
     ){
         return new GetTaskRoute(
-            "/task/:uid",
+            "/:uid",
             "get",
             getTaskUsecase
         )

@@ -18,7 +18,7 @@ export class CreateTaskRoute extends Route{
         createTaskUsecase : CreateTaskUsecase
     ){
         return new CreateTaskRoute(
-            "/task",
+            "/",
             "post",
             createTaskUsecase
         )
