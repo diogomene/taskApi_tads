@@ -8,8 +8,8 @@ import { GetTaskUsecase } from "./get.usecase"
 
 
 
-export class GetAllTasksUsecase implements Usecase<void,GetAllTaskOutputDto>{
-    private constructor(private readonly taskDao : TaskDao){}
+export class GetAllTaskUsecase implements Usecase<void,GetAllTaskOutputDto>{
+    constructor(private readonly taskDao : TaskDao){}
     
     static formatOutput(tasks: Task[]) : GetAllTaskOutputDto{
         return tasks.map((task:Task):GetTaskOutputDto=>{
@@ -19,7 +19,7 @@ export class GetAllTasksUsecase implements Usecase<void,GetAllTaskOutputDto>{
 
     public async execute(): Promise<GetAllTaskOutputDto> {
         const tasks = await this.taskDao.getAll()
-        return GetAllTasksUsecase.formatOutput(tasks)
+        return GetAllTaskUsecase.formatOutput(tasks)
     }
 
 }

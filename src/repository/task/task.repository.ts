@@ -17,7 +17,7 @@ export class TaskRepository implements TaskDao {
       uid: task.getUid(),
       name: task.getName(),
       description: task.getDescription(),
-      dueDate: task.getDueDate()||null,
+      dueDate: task.getDueDate() || null,
       creationDate: task.getCreationDate(),
     };
   }
@@ -27,7 +27,7 @@ export class TaskRepository implements TaskDao {
       taskDbEntity.name,
       taskDbEntity.description,
       taskDbEntity.creationDate,
-      taskDbEntity.dueDate||undefined
+      taskDbEntity.dueDate || undefined
     );
   }
   async save(task: Task): Promise<string> {
@@ -36,23 +36,28 @@ export class TaskRepository implements TaskDao {
     return task.getUid();
   }
   async getAll(): Promise<Task[]> {
-    throw new Error("Method not implemented.");
+    const taskDbEntities = await this.prismaClient.task.findMany();
+    return taskDbEntities.map(this.toTask);
   }
   async get(uid: string): Promise<Task> {
-    const taskDbEntity = await this.prismaClient.task.findUnique({ where: { uid } });
+    const taskDbEntity = await this.prismaClient.task.findUnique({
+      where: { uid },
+    });
     if (!taskDbEntity) {
-        throw new Error(`Task with uid ${uid} not found`);
+      throw new Error(`Task with uid ${uid} not found`);
     }
     return this.toTask(taskDbEntity);
   }
   async update(task: Task): Promise<void> {
     await this.prismaClient.task.update({
-        where: { uid: task.getUid() },
-        data: this.toTaskDbEntity(task),
-    })
+      where: { uid: task.getUid() },
+      data: this.toTaskDbEntity(task),
+    });
   }
   async delete(uid: string): Promise<Task> {
-    const taskDbEntity = await this.prismaClient.task.delete({ where: { uid } });
+    const taskDbEntity = await this.prismaClient.task.delete({
+      where: { uid },
+    });
     return this.toTask(taskDbEntity);
   }
 }
