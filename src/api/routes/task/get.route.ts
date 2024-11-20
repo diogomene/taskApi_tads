@@ -11,6 +11,12 @@ export type GetTaskResponseDto = GetTaskOutputDto
  *   get:
  *     summary: Retrieve a task by UID
  *     parameters:
+ *       - in: header
+ *         name: token
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: JWT authentication token
  *       - in: path
  *         name: uid
  *         required: true
@@ -71,7 +77,9 @@ export class GetTaskRoute extends Route{
                 const taskResponse = GetTaskRoute.formatRes(task)
                 response.status(200).json(taskResponse)
             }catch{
-                response.status(404).json()
+                response.status(500).json({
+                    error:"erro ao processar requisição. verifique parâmetros"
+                })
             }
         }
     }

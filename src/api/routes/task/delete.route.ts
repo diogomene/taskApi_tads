@@ -12,6 +12,12 @@ export type DeleteTaskResponseDto = DeleteTaskOutputDto
  *   delete:
  *     summary: Delete a task
  *     parameters:
+ *       - in: header
+ *         name: token
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: JWT authentication token
  *       - in: path
  *         name: uid
  *         required: true
@@ -65,11 +71,17 @@ export class DeleteTaskRoute extends Route{
     }
     protected getHandler(): (request: Request, response: Response) => Promise<void> {
         return async (request: Request, response: Response) =>{
-            const {uid} = request.params
-            const deletedTask = await this.deleteTaskUsecase.execute({uid})
-            const deletedTaskResponse = DeleteTaskRoute.formatRes(deletedTask)
-
-            response.status(200).json(deletedTaskResponse)
+            try{
+                const {uid} = request.params
+                const deletedTask = await this.deleteTaskUsecase.execute({uid})
+                const deletedTaskResponse = DeleteTaskRoute.formatRes(deletedTask)
+    
+                response.status(200).json(deletedTaskResponse)
+            }catch{
+                response.status(500).json({
+                    error:"erro ao processar requisição. verifique parâmetros"
+                })
+            }
         }
     }
 

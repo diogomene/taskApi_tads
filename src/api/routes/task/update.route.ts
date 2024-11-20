@@ -10,6 +10,12 @@ export type UpdateTaskResponseDto = void
  *   put:
  *     summary: Update an existing task
  *     parameters:
+ *       - in: header
+ *         name: token
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: JWT authentication token
  *       - in: path
  *         name: uid
  *         required: true
@@ -55,21 +61,27 @@ export class UpdateTaskRoute extends Route{
 
     protected getHandler(): (request: Request, response: Response) => Promise<void> {
         return async (request: Request, response: Response) =>{
-            const {
-                uid,
-                name,
-                description,
-                dueDate
-            } = request.params
-            await this.updataTaskUsecase.execute(
-                {
-                    uid: uid,
-                    name: name,
-                    description: description,
-                    dueDate: new Date(dueDate),
-                }
-            )
-            response.status(200)
+            try{
+                const {
+                    uid,
+                    name,
+                    description,
+                    dueDate
+                } = request.params
+                await this.updataTaskUsecase.execute(
+                    {
+                        uid: uid,
+                        name: name,
+                        description: description,
+                        dueDate: new Date(dueDate),
+                    }
+                )
+                response.status(200)
+            }catch{
+                response.status(500).json({
+                    error:"erro ao processar requisição. verifique parâmetros"
+                })
+            }
         }
     }
 

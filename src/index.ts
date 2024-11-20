@@ -1,4 +1,5 @@
 import { ApiExpress } from "./api/api.express"
+import { JwtMiddleware } from "./api/middleware/jwt/jwt.middleware"
 import { CreateTaskRoute } from "./api/routes/task/create.route"
 import { DeleteTaskRoute } from "./api/routes/task/delete.route"
 import { GetTaskRoute } from "./api/routes/task/get.route"
@@ -24,13 +25,22 @@ function bootstrap(port:number){
     const updataTaskUsecase = new UpdateTaskUsecase(repository)
 
 
-    const expressApi = new ApiExpress([
-        CreateTaskRoute.newInstance(createTaskUseCase),
-        GetAllTaskRoute.newInstance(getAllTaskUsecase),
-        GetTaskRoute.newInstance(getTaskUsecase),
-        DeleteTaskRoute.newInstance(deleteTaskUsecase),
-        UpdateTaskRoute.newInstance(updataTaskUsecase)
-    ])
+    const expressApi = new ApiExpress()
+    expressApi.addMiddlewares(
+        [
+            JwtMiddleware.newInstance()
+        ]
+    )
+    expressApi.addRoutes(
+        [
+            CreateTaskRoute.newInstance(createTaskUseCase),
+            GetAllTaskRoute.newInstance(getAllTaskUsecase),
+            GetTaskRoute.newInstance(getTaskUsecase),
+            DeleteTaskRoute.newInstance(deleteTaskUsecase),
+            UpdateTaskRoute.newInstance(updataTaskUsecase)
+        ]
+    )
+
 
     expressApi.start(port)
 }

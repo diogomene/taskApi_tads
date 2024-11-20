@@ -10,6 +10,13 @@ export type GetAllTaskResponseDto = GetAllTaskOutputDto
  * /api:
  *   get:
  *     summary: Retrieve all tasks
+  *     parameters:
+ *       - in: header
+ *         name: token
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: JWT authentication token
  *     responses:
  *       200:
  *         description: A list of tasks

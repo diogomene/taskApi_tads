@@ -10,6 +10,13 @@ export type CreateTaskResponseDto = CreateTaskOutputDto
  * /api:
  *   post:
  *     summary: Create a new task
+ *     parameters:
+ *       - in: header
+ *         name: token
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: JWT authentication token
  *     requestBody:
  *       description: Task object that needs to be created
  *       required: true
@@ -39,6 +46,8 @@ export type CreateTaskResponseDto = CreateTaskOutputDto
  *               properties:
  *                 uid:
  *                   type: string
+ *       401:
+ *         description: Unauthorized
  */
 export class CreateTaskRoute extends Route{
     private constructor(
